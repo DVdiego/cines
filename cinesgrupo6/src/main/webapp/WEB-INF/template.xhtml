@@ -8,37 +8,40 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        
         <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
         <title>Facelets Template</title>
     </h:head>
 
     <h:body>
-        
+
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="50" resizable="true" closable="true" collapsible="true">
                 <h1><h:outputText value="Cines Luz de Castilla - Segovia"/></h1>
             </p:layoutUnit> 
 
             <p:layoutUnit position="west" size="175" header="Menú" collapsible="true">
-                <p:menu>
-                  
+                <h:form>
+                    <p:menu>
                         <p:menuitem value="Inicio" url="/faces/index.xhtml" icon="ui-icon-home" />
-                        <p:menuitem value="Booking" url="/faces/chat/booking.xhtml" />
+                        <p:menuitem value="Booking" action="booking" />
                         <p:menuitem value="Chat" url="/faces/chat/chatroom.xhtml" />
                         <p:menuitem value="Películas" url="/faces/client/movies.xhtml" />
-                   
-                </p:menu>
+                    </p:menu>
+                </h:form>
             </p:layoutUnit>
+
+            <p:layoutUnit position="center"> 
+                <ui:insert name="content"></ui:insert> 
+            </p:layoutUnit> 
 
 
         </p:layout> 
     </h:body>
-    
-    
-    
-    
+
+
+
+
 
 
 </html>

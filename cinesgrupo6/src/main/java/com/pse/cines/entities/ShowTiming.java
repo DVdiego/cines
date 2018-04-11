@@ -26,13 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author home
  */
+
 @Entity
 @Table(name = "show_timing")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ShowTiming.findAll", query = "SELECT s FROM ShowTiming s")
     , @NamedQuery(name = "ShowTiming.findById", query = "SELECT s FROM ShowTiming s WHERE s.id = :id")
-    , @NamedQuery(name = "ShowTiming.findByDay", query = "SELECT s FROM ShowTiming s WHERE s.day = :day")})
+    , @NamedQuery(name = "ShowTiming.findByDay", query = "SELECT s FROM ShowTiming s WHERE s.day = :day")
+    , @NamedQuery(name = "ShowTiming.findByMovieAndTimingId", query = "SELECT s FROM ShowTiming s WHERE s.movieId.id = :movieId AND s.timingId.id = :timingId")})
 public class ShowTiming implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +58,7 @@ public class ShowTiming implements Serializable {
     private Timeslot timingId;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "showTiming")
     private Sales sales;
+    
 
     public ShowTiming() {
     }

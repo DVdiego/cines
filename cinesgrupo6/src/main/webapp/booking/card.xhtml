@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h2><h:outputText value="Introduzca informacion del pago"/></h2>
+                    <h:form prependId="false">
+                        <h:panelGrid columns="3" id="grid">
+                            <p:outputLabel for="precio" value="Precio"/>
+                            <p:inputNumber id="precio" value="#{booking.precio}" required="true" decimalSeparator="," thousandSeparator="." minValue="0.00" maxValue="1000.00"/>
+                            <p:message for="precio" style="color:blue"/>
+                            <p:outputLabel for="tarjeta" value="Tarjeta de credito"/>
+                            <p:inputText id="tarjeta" value="#{booking.tarjeta}" required="true" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+                                <f:convertNumber integerOnly="true"/>
+                                <f:validateLength minimum="16" maximum="16"/>
+                            </p:inputText>
+                            <p:message for="tarjeta"/>
+                            <p:outputLabel for="fecha" value="Fecha de expiracion (mes/año)"/>
+                            <p:inputText id="fecha" value="#{booking.fecha}" required="true">
+                                <f:convertDateTime pattern="MM/yyyy"/>
+                            </p:inputText>
+                            <p:message for="fecha"/>
+                        </h:panelGrid>
+                        <p/><p:commandButton id="next" value="Confirmar" action="print" update="grid"/>
+                        <p:commandButton id="back" value="Atrás" action="confirm" icon="ui-icon-arrowrefresh-1-w" immediate="true"/>
+                    </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
