@@ -5,6 +5,8 @@
  */
 package com.pse.cines.client;
 
+import com.pse.cine.json.MovieReader;
+import com.pse.cine.json.MovieWriter;
 import com.pse.cines.entities.Movie;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -13,7 +15,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 
 @Named 
@@ -42,11 +46,16 @@ public class MovieClientBean {
     
     
     public Movie getMovie() {
-        Movie m = target
+        /*Movie m = target
                 .path("{movieId}")
                 .resolveTemplate("movieId", bean.getMovieId()).request()
                 .get(Movie.class);
-        return m;
+        return m;*/
+       
+        return target
+                .register(MovieReader.class)
+                .path("{movieId}")
+                .resolveTemplate("movieId", bean.getMovieId()) .request(MediaType.APPLICATION_JSON) .get(Movie.class);
     }
     
     public void deleteMovie() {
@@ -54,5 +63,17 @@ public class MovieClientBean {
                 .resolveTemplate("movieId", bean.getMovieId()).request()
                 .delete();
     }
+    
+    public void addMovie() {
+        Movie m = new Movie();
+        m.setId(1);
+        m.setName(bean.getMovieName());
+        m.setActors(bean.getActors());
+        target.register(MovieWriter.class)
+                .request()
+                .post(Entity.entity(m, MediaType.APPLICATION_JSON));
+    }
+
+  
     
 }
