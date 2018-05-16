@@ -16,17 +16,45 @@
     <h:body>
 
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="50" resizable="true" closable="true" collapsible="true">
-                <h1><h:outputText value="Cines Luz de Castilla - Segovia"/></h1>
-            </p:layoutUnit> 
-
-            <p:layoutUnit position="west" size="175" header="Menú" collapsible="true">
+              
+            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" >
+                <h2><h:outputText value="Aplicación Empresarial Cines Luz de Castilla - Segovia"/></h2>
+                <h:form>
+                    <p:toolbar rendered="#{request.isUserInRole('users')}">
+                        <f:facet name="left">
+                            <p:commandButton type="button" value="New" icon="ui-icon-document"/>
+                            <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+                            <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+                        </f:facet>
+                        <f:facet name="right">
+                            <p:menuButton value="#{loginView.authenticatedUser.name}">
+                                <p:menuitem value="Cerrar sesión" action="#{loginView.logout}" icon="ui-icon-power" />
+                            </p:menuButton>
+                        </f:facet>
+                    </p:toolbar>
+                </h:form>
+            </p:layoutUnit>
+ 
+            <p:layoutUnit position="west" size="200" header="Menú" collapsible="true">
                 <h:form>
                     <p:menu>
                         <p:menuitem value="Inicio" url="/faces/index.xhtml" icon="ui-icon-home" />
-                        <p:menuitem value="Booking" action="booking" />
-                        <p:menuitem value="Chat" url="/faces/chat/chatroom.xhtml" />
-                        <p:menuitem value="Películas" url="/faces/client/movies.xhtml" />
+                        <p:menuitem value="Iniciar Sesión" url="/faces/resources/login.xhtml"
+                                    rendered="#{request.isUserInRole('users')==false}" icon="ui-icon-key"/>
+                        <p:menuitem value="Registro" url="/faces/registro.xhtml"
+                                    rendered="#{request.isUserInRole('users')==false}" icon="ui-icon-pencil"/>
+                        <p:submenu label ="Usuario" rendered="#{request.isUserInRole('users')}">
+                            <p:menuitem value="Booking" action="booking" icon="ui-icon-cart"/>
+                            <p:menuitem value="Chat" url="/faces/chat/chatroom.xhtml" icon="ui-icon-person"/>
+                            <p:menuitem value="Películas" url="/faces/client/movies.xhtml" icon="ui-iconcalculator"/>
+                        </p:submenu>
+                        <p:submenu label ="Administrador" rendered="#{request.isUserInRole('admin')}">
+                            <p:menuitem value="Películas" url="/faces/client/movies.xhtml" icon="ui-iconcalculator"/>
+
+                        </p:submenu>
                     </p:menu>
                 </h:form>
             </p:layoutUnit>
